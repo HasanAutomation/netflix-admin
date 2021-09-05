@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import UserList from './components/UserList';
 import User from './components/User';
 import CreateUser from './components/User/CreateUser';
+import Login from './pages/Login';
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
         <Switch>
           <Route exact path='/'>
             <Home />
+          </Route>
+          <Route exact path='/login'>
+            <Login />
           </Route>
           <Route exact path='/users'>
             <UserList />

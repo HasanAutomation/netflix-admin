@@ -3,14 +3,14 @@ import { DataGrid } from '@material-ui/data-grid';
 import { DeleteOutline } from '@material-ui/icons';
 import './UserList.css';
 import { Link } from 'react-router-dom';
-import { getNewUsers } from '../../api';
+import { getUsers } from '../../api';
 import { formatUserData } from '../../utils/constants';
 
 export default function UserList() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    getNewUsers()
+    getUsers()
       .then(({ data }) => {
         setData(formatUserData(data));
       })

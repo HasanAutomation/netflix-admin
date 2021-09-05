@@ -1,4 +1,4 @@
-import { LOGIN_ERROR, LOGIN_START, LOGIN_SUCCESS } from './authActions';
+import { LOGIN_ERROR, LOGIN_START, LOGIN_SUCCESS, LOGOUT } from './authActions';
 
 export default function authReducer(state, action) {
   switch (action.type) {
@@ -20,6 +20,13 @@ export default function authReducer(state, action) {
         loading: false,
         user: null,
         error: action.payload,
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        user: null,
+        loading: false,
+        isLoggedIn: false,
       };
     default:
       return state;

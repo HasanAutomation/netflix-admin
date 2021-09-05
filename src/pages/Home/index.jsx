@@ -4,6 +4,7 @@ import Chart from '../../components/Chart';
 import FeaturedInfo from '../../components/FeaturedInfo';
 import WidgetLarge from '../../components/WidgetLarge';
 import WidgetSmall from '../../components/WidgetSmall';
+import { useMovieData } from '../../contexts/movieContext/MovieContext';
 import './Home.css';
 
 export default function Home() {
@@ -26,6 +27,8 @@ export default function Home() {
   );
 
   const [userStats, setUserStats] = useState([]);
+  const [state] = useMovieData();
+  console.log(state);
 
   useEffect(() => {
     try {

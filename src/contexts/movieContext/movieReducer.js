@@ -1,4 +1,5 @@
 import {
+  DELETE_MOVIE,
   GET_ALL_MOVIES_ERROR,
   GET_ALL_MOVIES_START,
   GET_ALL_MOVIES_SUCCESS,
@@ -14,6 +15,12 @@ export default function movieReducer(state, action) {
       return {
         loading: false,
         movies: action.payload,
+      };
+    case DELETE_MOVIE:
+      console.log('changed state');
+      return {
+        ...state,
+        movies: state.movies.filter(movie => movie._id !== action.payload),
       };
     case GET_ALL_MOVIES_ERROR:
       return {

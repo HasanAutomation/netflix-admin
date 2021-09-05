@@ -9,10 +9,35 @@ import {
   getMovieStart,
   getMoviesSuccess,
   getMoviesError,
+  deleteMovie,
 } from '../contexts/movieContext/movieActions';
 const baseURL = 'http://localhost:5500/api';
 
 const api = axios.create({ baseURL, withCredentials: true });
+
+api.interceptors.response.use(
+  config => config,
+  async err => {
+    const originalRequest = err.config;
+
+    if (
+      err.response.status === 401 &&
+      originalRequest &&
+      !originalRequest.isRetry
+    ) {
+      originalRequest.isRetry = true;
+      try {
+        await axios.get('http://localhost:5500/api/users/refresh', {
+          withCredentials: true,
+        });
+        return api.request(originalRequest);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    throw err;
+  }
+);
 
 // Users
 export const login = async (user, dispatch) => {
@@ -46,5 +71,14 @@ export const getMovies = async dispatch => {
   } catch (err) {
     console.log(err);
     dispatch(getMoviesError());
+  }
+};
+
+export const deleteMovieApi = async (id, dispatch) => {
+  try {
+    await api.delete(`/movies/${id}`);
+    dispatch(deleteMovie(id));
+  } catch (err) {
+    console.log(err);
   }
 };

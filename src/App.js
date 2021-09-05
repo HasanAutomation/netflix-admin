@@ -10,6 +10,7 @@ import Login from './pages/Login';
 import { useAuthData } from './contexts/authContext/AuthContext';
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import useLoadingWithRefresh from './hooks/useLoadingWithRefresh';
+import MovieList from './components/MovieList';
 
 function App() {
   const { loading } = useLoadingWithRefresh();
@@ -30,6 +31,9 @@ function App() {
           </GuestRoute>
           <AdminRoute exact path='/users'>
             <UserList />
+          </AdminRoute>
+          <AdminRoute exact path='/movies'>
+            <MovieList />
           </AdminRoute>
           <AdminRoute exact path='/users/create'>
             <CreateUser />

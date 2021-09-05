@@ -1,0 +1,40 @@
+.featured{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.featured-item{
+    flex: 1;
+    margin: 0px 20px;
+    padding: 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    -webkit-box-shadow:0px 0px 15px -10px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0,0,0,0.75);
+}
+.featured-title{
+    font-size: 20px;
+}
+.featured-money-container{
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+}
+.featured-money-rate{
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+.featured-money{
+    font-size: 30px;
+    margin-right: 5px;
+}
+.featured-icon{
+    font-size: 14px;
+    color: green;
+    margin-left: 5px;
+}
+.negetive{
+    color: red !important;
+}

@@ -1,0 +1,47 @@
+.createUser{
+    flex:4
+}
+.userForm{
+    display: flex;
+    flex-wrap: wrap;
+}
+.newUserFormItem{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    margin:10px;
+}
+.newUserFormItem > label{
+    margin-bottom: 5px;
+}
+.newUserFormItem > input{
+    height: 20px;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+.radioContainer > label{
+    padding: 5px;
+    margin: 5px;
+    color: #555;
+    font-size: 18px;
+
+}
+.newUserSelect{
+    height: 40px;
+    border-radius: 5px;
+}
+.radioLabel{
+    margin-right: 10px;
+}
+.createUserButton{
+    background: darkblue;
+    border: none;
+    width: 200px;
+    color: white;
+    padding: 7px 10px;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 20px;
+}

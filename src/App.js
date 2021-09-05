@@ -7,33 +7,83 @@ import UserList from './components/UserList';
 import User from './components/User';
 import CreateUser from './components/User/CreateUser';
 import Login from './pages/Login';
+import { useAuthData } from './contexts/authContext/AuthContext';
+import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
+import useLoadingWithRefresh from './hooks/useLoadingWithRefresh';
 
 function App() {
-  return (
+  const { loading } = useLoadingWithRefresh();
+
+  return loading ? (
+    <h3>Loading,please wait...</h3>
+  ) : (
     <BrowserRouter>
       <TopBar />
       <div className='container'>
         <Sidebar />
         <Switch>
-          <Route exact path='/'>
+          <AdminRoute exact path='/'>
             <Home />
-          </Route>
-          <Route exact path='/login'>
+          </AdminRoute>
+          <GuestRoute exact path='/login'>
             <Login />
-          </Route>
-          <Route exact path='/users'>
+          </GuestRoute>
+          <AdminRoute exact path='/users'>
             <UserList />
-          </Route>
-          <Route exact path='/users/create'>
+          </AdminRoute>
+          <AdminRoute exact path='/users/create'>
             <CreateUser />
-          </Route>
-          <Route exact path='/users/:id'>
+          </AdminRoute>
+          <AdminRoute exact path='/users/:id'>
             <User />
-          </Route>
+          </AdminRoute>
         </Switch>
       </div>
     </BrowserRouter>
   );
 }
+
+const GuestRoute = ({ children, ...rest }) => {
+  const [state] = useAuthData();
+  return (
+    <Route
+      {...rest}
+      render={({ location }) => {
+        return state.isLoggedIn ? (
+          <Redirect
+            to={{
+              pathname: '/',
+              state: { from: location },
+            }}
+          />
+        ) : (
+          children
+        );
+      }}
+    ></Route>
+  );
+};
+
+const AdminRoute = ({ children, ...rest }) => {
+  const [state] = useAuthData();
+  const { isLoggedIn, user } = state;
+  return (
+    <Route
+      {...rest}
+      render={({ location }) => {
+        return !isLoggedIn && !user?.isAdmin ? (
+          <Redirect
+            to={{
+              pathname: '/login',
+              state: { from: location },
+            }}
+          />
+        ) : (
+          children
+        );
+      }}
+    ></Route>
+  );
+};
 
 export default App;

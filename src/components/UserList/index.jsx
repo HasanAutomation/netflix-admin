@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import { DeleteOutline } from '@material-ui/icons';
 import './UserList.css';
-import { userRows } from '../../utils/dummyData';
 import { Link } from 'react-router-dom';
+import { getNewUsers } from '../../api';
+import { formatUserData } from '../../utils/constants';
 
 export default function UserList() {
-  const [data, setData] = useState(userRows);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    getNewUsers()
+      .then(({ data }) => {
+        setData(formatUserData(data));
+      })
+      .catch(err => {
+        console.log(err);
+        setData([]);
+      });
+  }, []);
 
   const removeRow = id => {
     if (window.confirm('Are you sure?')) {
@@ -28,17 +40,11 @@ export default function UserList() {
               className='itemImage'
               src={params.row.avatar}
               alt={params.row.username}
-              srcset=''
             />
             {params.row.username}
           </div>
         );
       },
-    },
-    {
-      field: 'avatar',
-      headerName: 'Image',
-      width: 150,
     },
     {
       field: 'email',
@@ -49,11 +55,6 @@ export default function UserList() {
       field: 'status',
       headerName: 'Status',
       width: 120,
-    },
-    {
-      field: 'transaction',
-      headerName: 'Transaction',
-      width: 160,
     },
     {
       field: 'action',

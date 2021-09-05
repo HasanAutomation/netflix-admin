@@ -5,6 +5,7 @@ const initialState = {
   user: null,
   loading: false,
   error: null,
+  isLoggedIn: false,
 };
 
 export const AuthContext = createContext(initialState);

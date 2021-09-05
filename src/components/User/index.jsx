@@ -63,7 +63,7 @@ export default function User() {
           </div>
         </div>
         <div className='userUpdate'>
-          <snap className='userUpdateTitle'>Edit</snap>
+          <span className='userUpdateTitle'>Edit</span>
           <form className='userUpdateForm'>
             <div className='userUpdateLeft'>
               <div className='formGroup'>

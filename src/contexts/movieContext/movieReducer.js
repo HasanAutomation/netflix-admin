@@ -17,7 +17,6 @@ export default function movieReducer(state, action) {
         movies: action.payload,
       };
     case DELETE_MOVIE:
-      console.log('changed state');
       return {
         ...state,
         movies: state.movies.filter(movie => movie._id !== action.payload),
@@ -27,5 +26,7 @@ export default function movieReducer(state, action) {
         loading: false,
         movies: [],
       };
+    default:
+      return state;
   }
 }

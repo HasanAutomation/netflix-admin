@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import { DeleteOutline } from '@material-ui/icons';
 import './movieList.css';
 import { Link } from 'react-router-dom';
 import { deleteMovieApi, getMovies } from '../../api';
 import { useMovieData } from '../../contexts/movieContext/MovieContext';
-import { deleteMovie } from '../../contexts/movieContext/movieActions';
 
 export default function MovieList() {
   const [state, dispatch] = useMovieData();
@@ -66,7 +65,9 @@ export default function MovieList() {
       renderCell: params => {
         return (
           <>
-            <Link to={`/movies/${params.row._id}`}>
+            <Link
+              to={{ pathname: `/movies/${params.row._id}`, movie: params.row }}
+            >
               <button className='userListEdit'>Edit</button>
             </Link>
             <DeleteOutline

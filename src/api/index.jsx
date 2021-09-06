@@ -74,6 +74,15 @@ export const getMovies = async dispatch => {
   }
 };
 
+export const createMovie = async movie => {
+  try {
+    const { data } = await api.post('/movies', movie);
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const deleteMovieApi = async (id, dispatch) => {
   try {
     await api.delete(`/movies/${id}`);

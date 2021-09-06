@@ -24,6 +24,6 @@ export default function useLoadingWithRefresh() {
         setLoading(false);
       }
     })();
-  }, []);
+  }, [dispatch]);
   return { loading };
 }

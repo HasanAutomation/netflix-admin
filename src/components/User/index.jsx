@@ -5,7 +5,6 @@ import {
   PermIdentity,
   PhoneAndroid,
   Publish,
-  DeleteOutline,
 } from '@material-ui/icons';
 import React from 'react';
 import { useHistory } from 'react-router-dom';

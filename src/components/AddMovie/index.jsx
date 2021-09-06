@@ -1,8 +1,12 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { createMovie } from '../../api';
 import firebase from '../../firebase';
 import './AddMovie.css';
 
 export default function NewMovie() {
+  const history = useHistory();
+
   const [movie, setMovie] = useState(null);
   const [img, setImg] = useState(null);
   const [imgTitle, setImgTitle] = useState(null);
@@ -10,6 +14,7 @@ export default function NewMovie() {
   const [trailer, setTrailer] = useState(null);
   const [video, setVideo] = useState(null);
   const [uploaded, setUploaded] = useState(0);
+  const [uploading, setUploading] = useState(false);
 
   const handleChange = e => {
     setMovie({
@@ -22,13 +27,12 @@ export default function NewMovie() {
     const { getStorage, getDownloadURL, ref, uploadBytesResumable } = firebase;
 
     const storage = getStorage();
-    let storageRef;
-    let uploadTask;
 
     items.forEach(item => {
+      setUploading(true);
       const fileName = `new-item-${Date.now()}-${item.file.name}`;
-      storageRef = ref(storage, `/items/${fileName}`);
-      uploadTask = uploadBytesResumable(storageRef, item.file);
+      const storageRef = ref(storage, `/items/${fileName}`);
+      const uploadTask = uploadBytesResumable(storageRef, item.file);
       uploadTask.on(
         'state_changed',
         snapshot => {
@@ -40,15 +44,16 @@ export default function NewMovie() {
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(uri => {
             setMovie(prev => ({ ...prev, [item.label]: uri }));
+            setUploading(false);
             setUploaded(prev => prev + 1);
           });
         }
       );
     });
   };
-
   const handleUpload = e => {
     e.preventDefault();
+
     upload([
       { file: img, label: 'image' },
       { file: imgTitle, label: 'imageTitle' },
@@ -58,9 +63,13 @@ export default function NewMovie() {
     ]);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     console.log(movie);
+    const res = await createMovie(movie);
+    if (res.ok) {
+      history.push('/movies');
+    }
   };
 
   return (
@@ -72,7 +81,7 @@ export default function NewMovie() {
           <input
             type='file'
             id='img'
-            name='img'
+            name='image'
             onChange={e => setImg(e.target.files[0])}
           />
         </div>
@@ -80,8 +89,8 @@ export default function NewMovie() {
           <label>Title image</label>
           <input
             type='file'
-            id='imgTitle'
-            name='imgTitle'
+            id='imageTitle'
+            name='imageTitle'
             onChange={e => setImgTitle(e.target.files[0])}
           />
         </div>
@@ -89,8 +98,8 @@ export default function NewMovie() {
           <label>Thumbnail image</label>
           <input
             type='file'
-            id='imgSm'
-            name='imgSm'
+            id='imageThumbnail'
+            name='imageThumbnail'
             onChange={e => setImgSm(e.target.files[0])}
           />
         </div>
@@ -176,7 +185,11 @@ export default function NewMovie() {
             Create
           </button>
         ) : (
-          <button className='addProductButton' onClick={handleUpload}>
+          <button
+            className='addProductButton'
+            onClick={handleUpload}
+            disabled={uploading}
+          >
             Upload
           </button>
         )}

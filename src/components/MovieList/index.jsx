@@ -17,7 +17,7 @@ export default function MovieList() {
 
   useEffect(() => {
     getMovies(dispatch);
-  }, []);
+  }, [dispatch]);
 
   const columns = [
     { field: '_id', headerName: 'ID', width: 90 },

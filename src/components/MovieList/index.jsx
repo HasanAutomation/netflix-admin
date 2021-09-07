@@ -80,7 +80,12 @@ export default function MovieList() {
       width: 120,
     },
   ];
-  if (state.loading) return <h3>Fetching movies....</h3>;
+  if (state.loading)
+    return (
+      <div style={{ flex: 4 }}>
+        <h4>Fetching movies....</h4>
+      </div>
+    );
 
   return (
     <div className='movieList'>

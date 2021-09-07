@@ -6,6 +6,11 @@ import {
   logoutAction,
 } from '../contexts/authContext/authActions';
 import {
+  listError,
+  listStart,
+  listSuccess,
+} from '../contexts/listContext/listActions';
+import {
   getMovieStart,
   getMoviesSuccess,
   getMoviesError,
@@ -87,6 +92,27 @@ export const deleteMovieApi = async (id, dispatch) => {
   try {
     await api.delete(`/movies/${id}`);
     dispatch(deleteMovie(id));
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// movie lists
+export const getMoviesLists = async dispatch => {
+  dispatch(listStart());
+  try {
+    const { data } = await api.get('/movie-list');
+    dispatch(listSuccess(data));
+  } catch (err) {
+    console.log(err);
+    dispatch(listError());
+  }
+};
+
+export const createMovieList = async body => {
+  try {
+    const { data } = await api.post('/movie-list', body);
+    return data;
   } catch (err) {
     console.log(err);
   }

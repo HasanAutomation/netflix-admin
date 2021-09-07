@@ -65,7 +65,6 @@ export default function NewMovie() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    console.log(movie);
     const res = await createMovie(movie);
     if (res.ok) {
       history.push('/movies');

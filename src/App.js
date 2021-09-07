@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import TopBar from './components/TopBar';
 import Home from './pages/Home';
@@ -8,11 +8,13 @@ import User from './components/User';
 import CreateUser from './components/User/CreateUser';
 import Login from './pages/Login';
 import { useAuthData } from './contexts/authContext/AuthContext';
-import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import useLoadingWithRefresh from './hooks/useLoadingWithRefresh';
 import MovieList from './components/MovieList';
 import Movie from './components/Movie';
 import NewMovie from './components/AddMovie';
+import Lists from './components/Lists';
+import List from './components/List';
+import NewList from './components/NewList';
 
 function App() {
   const { loading } = useLoadingWithRefresh();
@@ -37,11 +39,20 @@ function App() {
           <AdminRoute exact path='/movies'>
             <MovieList />
           </AdminRoute>
+          <AdminRoute exact path='/lists'>
+            <Lists />
+          </AdminRoute>
           <AdminRoute exact path='/new-movie'>
             <NewMovie />
           </AdminRoute>
+          <AdminRoute exact path='/new-list'>
+            <NewList />
+          </AdminRoute>
           <AdminRoute exact path='/movies/:id'>
             <Movie />
+          </AdminRoute>
+          <AdminRoute exact path='/lists/:id'>
+            <List />
           </AdminRoute>
           <AdminRoute exact path='/users/create'>
             <CreateUser />

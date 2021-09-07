@@ -8,14 +8,18 @@ import { formatUserData } from '../../utils/constants';
 
 export default function UserList() {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     getUsers()
       .then(({ data }) => {
         setData(formatUserData(data));
+        setLoading(false);
       })
       .catch(err => {
         console.log(err);
+        setLoading(true);
         setData([]);
       });
   }, []);
@@ -76,6 +80,13 @@ export default function UserList() {
       width: 120,
     },
   ];
+
+  if (loading)
+    return (
+      <div style={{ flex: 4 }}>
+        <h3>Fetching....</h3>
+      </div>
+    );
 
   return (
     <div className='userList'>

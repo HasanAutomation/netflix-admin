@@ -117,6 +117,10 @@
     flex-direction: column;
     justify-content: space-around;
   }
+  .productFormRight > select{
+    height: 200px;
+    width: 200px;
+  }
   
   .productUpload{
     display: flex;

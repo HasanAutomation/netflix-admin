@@ -117,3 +117,12 @@ export const createMovieList = async body => {
     console.log(err);
   }
 };
+
+export const updateMovieList = async (id, body) => {
+  try {
+    const { data } = await api.put(`/movie-list/${id}`, body);
+    return data;
+  } catch (er) {
+    console.log(er);
+  }
+};
